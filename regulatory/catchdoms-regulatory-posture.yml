@@ -1,0 +1,18 @@
+generated: '2026-09-27'
+method: searched
+source: https://catchdoms.com/privacy
+signals:
+  subprocessors:
+    evidence:
+      - source: https://catchdoms.com/privacy
+        http_status: 200
+        fetched: privacy_page.txt
+        quote: "We use the following third-party services: Stripe, Payment processing. We do not store your credit card details. Umami, Privacy-focused analytics. No cookies, no personal data collected. Google Ads, Conversion tracking for advertising campaigns. Sets cookies to measure ad effectiveness. Clarity, Session replay and heatmap analytics by Microsoft. Records anonymized user interactions (clicks, mouse movements) to improve the user experience."
+    note: "Lists third‑party services used, indicating they act as subprocessors for analytics and payment processing."
+  data_retention:
+    evidence:
+      - source: https://catchdoms.com/privacy
+        http_status: 200
+        fetched: privacy_page.txt
+        quote: "While we strive to protect your data, no method of transmission over the Internet is 100% secure. We cannot guarantee absolute security."
+    note: "No explicit retention period is provided; only a security disclaimer is present."

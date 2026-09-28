@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/catchdoms/main/json-schema/catchdoms-free-domain-schema.json",
+  "title": "FreeDomain",
+  "description": "A domain as returned by the free, unauthenticated /free/domains endpoint. Names beyond the first few are masked, and premium metrics (TF/CF/TTF/GMB) are omitted.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/catchdoms-openapi.yml#/components/schemas/FreeDomain",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Domain name, or a masked placeholder (••••••••.tld) beyond the free visible limit"
+    },
+    "tld": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "max_bid": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code for this source's price fields; null when not deterministic"
+    },
+    "bids_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "auction_end_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "score": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "age": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "domain_authority": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "backlinks_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "referring_domains": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "language": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "purchase_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Buy/bid link; null when the domain name is masked"
+    }
+  }
+}

@@ -1,0 +1,1499 @@
+# x-archived-from: catchdoms-openapi.yml
+# x-archived-on: 2026-09-27
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "CatchDoms API",
+    "description": "Search expired, auction, brandable, aged deleted, and pending-delete domains from 20+ sources with SEO metrics, quality scores, traffic estimates, and auction prices. Updated continuously across source-specific schedules.",
+    "version": "1.1.1",
+    "contact": {
+      "name": "CatchDoms",
+      "url": "https://catchdoms.com",
+      "email": "hello@catchdoms.com"
+    },
+    "x-logo": {
+      "url": "https://catchdoms.com/img/favicons/android-chrome-192x192.png"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://catchdoms.com/api",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/free/domains": {
+      "get": {
+        "summary": "Free domain search (no auth)",
+        "description": "Public, unauthenticated demo endpoint. Rate-limited to 3 requests/minute per IP. Returns at most 50 results; only the first few domain names are shown in full, the rest are masked (e.g. ••••••••.com), and premium metrics (Trust Flow, Citation Flow, TTF topic, GMB) are omitted. Use the authenticated /domains endpoint for full data.",
+        "operationId": "freeDomains",
+        "security": [],
+        "parameters": [
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Filter by source platform (free-tier sources only)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dynadot",
+                "catched",
+                "dropcatch",
+                "godaddy",
+                "gname",
+                "snapnames",
+                "ukdroplists",
+                "subreg",
+                "webexpire",
+                "parkio",
+                "bloomup",
+                "seodomains"
+              ]
+            }
+          },
+          {
+            "name": "tld",
+            "in": "query",
+            "description": "Filter by TLD",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "score_min",
+            "in": "query",
+            "description": "Minimum quality score (0-100)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "age_min",
+            "in": "query",
+            "description": "Minimum age in years",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "auction",
+                "closeout",
+                "backorder"
+              ]
+            }
+          },
+          {
+            "name": "has_bids",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_backlinks",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "da_min",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "rd_min",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contains",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "price_min",
+            "in": "query",
+            "description": "Minimum price or bid in each source's native currency",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_max",
+            "in": "query",
+            "description": "Maximum price or bid in each source's native currency",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "snapshots_min",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (1-50, default 10)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Masked free-tier results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FreeDomain"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer"
+                        },
+                        "total_available": {
+                          "type": "integer"
+                        },
+                        "visible_names": {
+                          "type": "integer",
+                          "description": "How many domain names are shown in full before masking"
+                        },
+                        "free_tier": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "upsell": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "signup_url": {
+                          "type": "string"
+                        },
+                        "pro_url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (3 requests/minute per IP)"
+          }
+        }
+      }
+    },
+    "/domains": {
+      "get": {
+        "operationId": "listDomains",
+        "summary": "Search expired and auction domains",
+        "description": "Returns paginated list of domains matching the given filters, sorted by quality score.",
+        "tags": [
+          "Domains"
+        ],
+        "parameters": [
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Filter by source platform",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dynadot",
+                "catched",
+                "dropcatch",
+                "godaddy",
+                "gname",
+                "snapnames",
+                "ukdroplists",
+                "subreg",
+                "webexpire",
+                "parkio",
+                "bloomup",
+                "nicsell",
+                "namesilo",
+                "namecheap",
+                "sedo",
+                "gnews-domains",
+                "backorders-domains",
+                "domainlore",
+                "rakkodomain",
+                "seodomains",
+                "nameshift",
+                "namepros",
+                "regfree"
+              ]
+            }
+          },
+          {
+            "name": "tld",
+            "in": "query",
+            "description": "Filter by TLD (e.g. .com, .fr). Comma-separated for multiple.",
+            "schema": {
+              "type": "string"
+            },
+            "example": ".fr,.de,.it"
+          },
+          {
+            "name": "score_min",
+            "in": "query",
+            "description": "Minimum quality score (0-100). 50+ for good, 70+ for excellent.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "age_min",
+            "in": "query",
+            "description": "Minimum domain age in years (Wayback Machine first snapshot).",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by domain type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "auction",
+                "closeout",
+                "backorder"
+              ]
+            }
+          },
+          {
+            "name": "has_bids",
+            "in": "query",
+            "description": "Only domains with active auction bids",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_backlinks",
+            "in": "query",
+            "description": "Only domains with referring domains",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_gmb",
+            "in": "query",
+            "description": "Only domains with a Google Business listing",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_edu_gov",
+            "in": "query",
+            "description": "Only domains with .edu or .gov referring domains",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "da_min",
+            "in": "query",
+            "description": "Minimum Domain Authority (0-100)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "rd_min",
+            "in": "query",
+            "description": "Minimum referring domains count",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "tf_min",
+            "in": "query",
+            "description": "Minimum Trust Flow (0-100)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "cf_min",
+            "in": "query",
+            "description": "Minimum Citation Flow (0-100)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "categories",
+            "in": "query",
+            "description": "Comma-separated categories: TTF topics or seo.domains categories, parent (health) or parent/child (recreation/travel). Case-insensitive.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "techs",
+            "in": "query",
+            "description": "Comma-separated historical tech stack labels (case-sensitive). OR semantic: a domain matches if its historical_tech contains ANY of the labels. Examples: 'WordPress', 'Google Maps', 'Stripe,Shopify'. Pro plans cannot get regfee results through this filter — the access-regfree gate is enforced before the filter applies.",
+            "schema": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "example": "WordPress,Yoast SEO"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Filter by detected language code (EN, FR, DE, ES, etc.)",
+            "schema": {
+              "type": "string",
+              "maxLength": 5
+            }
+          },
+          {
+            "name": "contains",
+            "in": "query",
+            "description": "Keyword the domain name must contain. Single term or comma-separated list with OR semantic (e.g. 'entreprise,entrepreneur' matches names containing either).",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "example": "entreprise,entrepreneur"
+          },
+          {
+            "name": "price_min",
+            "in": "query",
+            "description": "Minimum price or bid in each source's native currency",
+            "schema": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "price_max",
+            "in": "query",
+            "description": "Maximum price or bid in each source's native currency",
+            "schema": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "snapshots_min",
+            "in": "query",
+            "description": "Minimum Wayback Machine snapshots",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "use_cases",
+            "in": "query",
+            "description": "Comma-separated buyer-intent categories derived from historical tech. OR semantic: a domain matches if it has ANY requested category. Available values: ecommerce, local-biz, news, saas, forum, media, developer.",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "example": "ecommerce,saas"
+          },
+          {
+            "name": "traffic_min",
+            "in": "query",
+            "description": "Minimum latest estimated worldwide monthly organic traffic",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "created_after",
+            "in": "query",
+            "description": "Only domains added on or after this date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-09-01"
+          },
+          {
+            "name": "created_before",
+            "in": "query",
+            "description": "Only domains added before this date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-09-02"
+          },
+          {
+            "name": "ends_after",
+            "in": "query",
+            "description": "Only auctions ending on or after this date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-09-11"
+          },
+          {
+            "name": "ends_before",
+            "in": "query",
+            "description": "Only auctions ending before this date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-09-12"
+          },
+          {
+            "name": "include_historical_traffic",
+            "in": "query",
+            "description": "Include the full historical_traffic object. Disabled by default because the payload is comparatively large.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Results per page (1-100, default 50)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "after_id",
+            "in": "query",
+            "description": "Keyset cursor for bulk access: returns rows with id > after_id ordered by id asc — cheap at any depth, preferred over deep page offsets for full syncs. The response gains a top-level `cursor` object (next_after_id, has_more); pass next_after_id back as after_id to continue. page/per_page offsets and standard links/meta are non-authoritative in cursor mode. Cursor results ALWAYS exclude source=regfree rows; requesting source=regfree with after_id, or using the cursor from a trial account or free API channel, returns 403 cursor_not_available. For incremental syncs prefer created_after.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of domains",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Domain"
+                      }
+                    },
+                    "links": {
+                      "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "cursor": {
+                      "type": "object",
+                      "description": "Present only when the request used after_id (keyset mode). links/meta are non-authoritative in cursor mode.",
+                      "properties": {
+                        "after_id": {
+                          "type": "integer"
+                        },
+                        "next_after_id": {
+                          "type": "integer",
+                          "nullable": true
+                        },
+                        "has_more": {
+                          "type": "boolean"
+                        },
+                        "order": {
+                          "type": "string",
+                          "example": "id asc"
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API token"
+          },
+          "403": {
+            "description": "Valid token but no Pro subscription — or, for after_id requests, cursor_not_available: the keyset cursor is denied for free API channels, trial accounts and source=regfree (JSON body: error, message, docs)"
+          }
+        }
+      }
+    },
+    "/domains/{domain}": {
+      "get": {
+        "operationId": "getDomain",
+        "summary": "Get a single domain by ID",
+        "description": "Returns full details for a specific domain.",
+        "tags": [
+          "Domains"
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "description": "Domain ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Domain details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Domain"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Domain not found"
+          }
+        }
+      }
+    },
+    "/pending-delete": {
+      "get": {
+        "tags": [
+          "Pending-Delete"
+        ],
+        "operationId": "listPendingDeleteDomains",
+        "summary": "List pending-delete domains (Authority+)",
+        "description": "Weekly inventory of domains about to drop across 125+ ccTLDs and gTLDs. Default view (week_end=all) returns upcoming drops only, soonest first; rows whose estimated drop date already passed are excluded unless include_past=1. Requires an Authority+ subscription (403 with upgrade_url otherwise).",
+        "parameters": [
+          {
+            "name": "tld",
+            "in": "query",
+            "description": "Comma-separated TLD list, with or without leading dot",
+            "schema": {
+              "type": "string",
+              "example": "fr,de,com"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Comma-separated WHOIS status filter",
+            "schema": {
+              "type": "string",
+              "example": "pendingDelete,redemptionPeriod"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Pipeline source",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "oi-diff",
+                "czds-daily"
+              ]
+            }
+          },
+          {
+            "name": "week_end",
+            "in": "query",
+            "description": "Snapshot week (YYYY-MM-DD) or 'all' (combined view). Explicit weeks include historical rows regardless of drop date.",
+            "schema": {
+              "type": "string",
+              "default": "all"
+            }
+          },
+          {
+            "name": "drops_within",
+            "in": "query",
+            "description": "Only rows whose estimated drop date is within N days from today (never past dates)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 60
+            }
+          },
+          {
+            "name": "contains",
+            "in": "query",
+            "description": "Substring match on the domain name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "no_dashes",
+            "in": "query",
+            "description": "Exclude SLDs containing hyphens",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "no_numbers",
+            "in": "query",
+            "description": "Exclude SLDs containing digits",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_past",
+            "in": "query",
+            "description": "With week_end=all, also return rows whose estimated drop date already passed",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Ordering. drop_date = soonest first, rows without a computable date last. drop_date_desc lists rows without a date first; combine with drops_within to keep dated rows only.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "drop_date",
+                "drop_date_desc",
+                "domain"
+              ],
+              "default": "drop_date"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Results per page (this endpoint uses per_page, not limit)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of pending-delete domains",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PendingDeleteDomain"
+                      }
+                    },
+                    "links": {
+                      "$ref": "#/components/schemas/PaginationLinks"
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API token"
+          },
+          "403": {
+            "description": "Valid token but no Authority+ subscription (response includes upgrade_url)"
+          },
+          "503": {
+            "description": "The request could not be served within its server-side budget. Every SQL statement on this route runs under an execution budget (count 6 s, ordered walk 4 s, row fetch 2 s) and a cold total for a given filter shape is computed by one request at a time; concurrent or over-budget requests get this JSON response with a Retry-After header instead of a proxy 504. Retry after the indicated delay, or narrow the query (tld, status, drops_within).",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "count_busy",
+                        "count_timeout",
+                        "rows_timeout"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pending-delete/{domain}": {
+      "get": {
+        "tags": [
+          "Pending-Delete"
+        ],
+        "operationId": "getPendingDeleteDomain",
+        "summary": "Look up one pending-delete domain (Authority+)",
+        "description": "Case-insensitive lookup by domain name. Returns the most recent snapshot row, or 404 if the domain is not currently in actionable pending-delete state.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "description": "Full domain name",
+            "schema": {
+              "type": "string",
+              "example": "example.fr"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The pending-delete row",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PendingDeleteDomain"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API token"
+          },
+          "403": {
+            "description": "Valid token but no Authority+ subscription"
+          },
+          "404": {
+            "description": "Domain not in actionable pending-delete state"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "API token from your CatchDoms account. Get one at https://catchdoms.com/api-access"
+      }
+    },
+    "schemas": {
+      "Domain": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique domain identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full domain name",
+            "example": "example.fr"
+          },
+          "tld": {
+            "type": "string",
+            "description": "TLD with dot prefix",
+            "example": ".fr"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source platform",
+            "enum": [
+              "dynadot",
+              "catched",
+              "dropcatch",
+              "godaddy",
+              "gname",
+              "snapnames",
+              "ukdroplists",
+              "subreg",
+              "webexpire",
+              "parkio",
+              "bloomup",
+              "nicsell",
+              "namesilo",
+              "namecheap",
+              "sedo",
+              "gnews-domains",
+              "backorders-domains",
+              "domainlore",
+              "rakkodomain",
+              "seodomains",
+              "nameshift",
+              "namepros",
+              "regfree"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "description": "Domain type",
+            "enum": [
+              "auction",
+              "closeout",
+              "backorder"
+            ]
+          },
+          "auction_type": {
+            "type": "string",
+            "nullable": true,
+            "description": "Sub-type (DropCatch: Dropped/PreRelease/PrivateSeller, GoDaddy: Bid/BuyNow)"
+          },
+          "price": {
+            "type": "number",
+            "nullable": true,
+            "description": "Fixed price or starting price in the source's native currency"
+          },
+          "max_bid": {
+            "type": "number",
+            "nullable": true,
+            "description": "Current highest bid in the source's native currency"
+          },
+          "effective_price": {
+            "type": "number",
+            "nullable": true,
+            "description": "Actual price: max_bid if set, otherwise price"
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true,
+            "pattern": "^[A-Z]{3}$",
+            "description": "ISO 4217 currency code for price, max_bid, effective_price, estibot_appraisal, and renewal_price values from this source; null when the source has no single deterministic currency",
+            "example": "USD"
+          },
+          "bids_count": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Number of bids"
+          },
+          "auction_end_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Auction end date (ISO 8601)"
+          },
+          "estibot_appraisal": {
+            "type": "number",
+            "nullable": true,
+            "description": "Automated valuation estimate"
+          },
+          "score": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Quality score (0-100)"
+          },
+          "is_spammy": {
+            "type": "boolean",
+            "description": "Whether flagged as spammy"
+          },
+          "age": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Domain age in years"
+          },
+          "wayback_snapshots": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Wayback Machine snapshot count"
+          },
+          "wayback_first_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "First Wayback snapshot"
+          },
+          "wayback_last_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Last Wayback snapshot"
+          },
+          "pagerank": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Open PageRank (0-10)"
+          },
+          "domain_authority": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Domain Authority (0-100)"
+          },
+          "backlinks_count": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Total backlinks"
+          },
+          "referring_domains": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Unique referring domains"
+          },
+          "trust_flow": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Trust Flow (0-100)"
+          },
+          "citation_flow": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Citation Flow (0-100)"
+          },
+          "ttf_topic": {
+            "type": "string",
+            "nullable": true,
+            "description": "Topical Trust Flow category",
+            "example": "Business/Marketing"
+          },
+          "ref_domains_edu": {
+            "type": "integer",
+            "nullable": true,
+            "description": "EDU referring domains"
+          },
+          "ref_domains_gov": {
+            "type": "integer",
+            "nullable": true,
+            "description": "GOV referring domains"
+          },
+          "ref_domains_dofollow": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Dofollow referring domains"
+          },
+          "seo_domains_category": {
+            "type": "string",
+            "nullable": true,
+            "description": "SEO.Domains category (seodomains source only)"
+          },
+          "seo_domains_subcategory": {
+            "type": "string",
+            "nullable": true,
+            "description": "SEO.Domains subcategory (seodomains source only)"
+          },
+          "indexed_pages": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Google indexed pages"
+          },
+          "historical_tech": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Tech stack fingerprints detected on the archived Wayback snapshot. null = not checked yet, [] = checked but no signal, array of labels = detected stack. Queryable via the techs filter (see /api/domains parameters).",
+            "example": [
+              "WordPress",
+              "Yoast SEO",
+              "Stripe"
+            ]
+          },
+          "use_cases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Buyer-intent categories derived from historical tech: ecommerce, local-biz, news, saas, forum, media, or developer. null = not classified yet."
+          },
+          "historical_traffic_etv": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Latest estimated worldwide monthly organic traffic"
+          },
+          "historical_traffic_peak": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Peak estimated monthly organic traffic over the historical window"
+          },
+          "historical_traffic_spark": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "nullable": true,
+            "description": "Denormalized historical monthly traffic series for charts"
+          },
+          "historical_traffic_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When historical traffic data was last fetched"
+          },
+          "historical_traffic": {
+            "type": "object",
+            "nullable": true,
+            "description": "Full historical organic-traffic data, including country breakdowns. Present only when include_historical_traffic=true."
+          },
+          "monthly_visitors": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Estimated monthly visitors"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true,
+            "description": "Detected language code",
+            "example": "FR"
+          },
+          "has_gmb": {
+            "type": "boolean",
+            "description": "Has Google Business listing"
+          },
+          "gmb_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "GMB business name"
+          },
+          "gmb_category": {
+            "type": "string",
+            "nullable": true,
+            "description": "GMB business category"
+          },
+          "gmb_address": {
+            "type": "string",
+            "nullable": true,
+            "description": "GMB business address"
+          },
+          "whois_registered_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "WHOIS or RDAP registration date"
+          },
+          "whois_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "WHOIS or RDAP expiration date"
+          },
+          "whois_last_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "WHOIS or RDAP last-change date"
+          },
+          "whois_registrar": {
+            "type": "string",
+            "nullable": true,
+            "description": "Registrar reported by WHOIS or RDAP"
+          },
+          "whois_status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Domain status values reported by WHOIS or RDAP"
+          },
+          "whois_nameservers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "description": "Nameservers reported by WHOIS or RDAP"
+          },
+          "whois_ns_category": {
+            "type": "string",
+            "nullable": true,
+            "description": "Classification of the current nameserver configuration"
+          },
+          "whois_checked_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When WHOIS or RDAP data was last checked"
+          },
+          "purchase_url": {
+            "type": "string",
+            "nullable": true,
+            "description": "Direct buy/bid link"
+          },
+          "purchase_platform": {
+            "type": "string",
+            "nullable": true,
+            "description": "Source platform name"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Added to CatchDoms"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last updated"
+          }
+        }
+      },
+      "PaginationLinks": {
+        "type": "object",
+        "properties": {
+          "first": {
+            "type": "string",
+            "nullable": true
+          },
+          "last": {
+            "type": "string",
+            "nullable": true
+          },
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "current_page": {
+            "type": "integer"
+          },
+          "last_page": {
+            "type": "integer"
+          },
+          "per_page": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "from": {
+            "type": "integer",
+            "nullable": true
+          },
+          "to": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "FreeDomain": {
+        "type": "object",
+        "description": "A domain as returned by the free, unauthenticated /free/domains endpoint. Names beyond the first few are masked, and premium metrics (TF/CF/TTF/GMB) are omitted.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Domain name, or a masked placeholder (••••••••.tld) beyond the free visible limit"
+          },
+          "tld": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "nullable": true
+          },
+          "max_bid": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true,
+            "pattern": "^[A-Z]{3}$",
+            "description": "ISO 4217 currency code for this source's price fields; null when not deterministic",
+            "example": "USD"
+          },
+          "bids_count": {
+            "type": "integer",
+            "nullable": true
+          },
+          "auction_end_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "score": {
+            "type": "integer",
+            "nullable": true
+          },
+          "age": {
+            "type": "integer",
+            "nullable": true
+          },
+          "domain_authority": {
+            "type": "integer",
+            "nullable": true
+          },
+          "backlinks_count": {
+            "type": "integer",
+            "nullable": true
+          },
+          "referring_domains": {
+            "type": "integer",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "purchase_url": {
+            "type": "string",
+            "nullable": true,
+            "description": "Buy/bid link; null when the domain name is masked"
+          }
+        }
+      },
+      "PendingDeleteDomain": {
+        "type": "object",
+        "description": "A domain in actionable pending-delete state. Authority+ tier only. Note: the SEO-metric fields (score, domain_authority, trust_flow, citation_flow, backlinks_count, referring_domains, pagerank, wayback_snapshots) are present for shape-consistency with the Domain schema but are typically null for pending-delete rows, which are a WHOIS-classified drop-signal feed and are not SEO-enriched.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique row identifier"
+          },
+          "domain": {
+            "type": "string",
+            "example": "example.fr"
+          },
+          "tld": {
+            "type": "string",
+            "description": "TLD without dot prefix",
+            "example": "fr"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "oi-diff",
+              "czds-daily"
+            ],
+            "description": "oi-diff = ccTLDs (weekly snapshot), czds-daily = gTLDs (daily zone files)"
+          },
+          "week_end": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Snapshot week anchor (Monday)"
+          },
+          "first_disappeared_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "whois_status": {
+            "type": "string",
+            "enum": [
+              "pendingDelete",
+              "redemptionPeriod",
+              "serverHold",
+              "clientHold",
+              "transition",
+              "quarantine"
+            ],
+            "description": "WHOIS classification bucket"
+          },
+          "dns_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "estimated_drop_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Predicted drop date; null when the registry timeline is not computable"
+          },
+          "whois_checked_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "is_idn": {
+            "type": "boolean"
+          },
+          "sld_length": {
+            "type": "integer",
+            "nullable": true
+          },
+          "score": {
+            "type": "integer",
+            "nullable": true
+          },
+          "domain_authority": {
+            "type": "integer",
+            "nullable": true
+          },
+          "trust_flow": {
+            "type": "integer",
+            "nullable": true
+          },
+          "citation_flow": {
+            "type": "integer",
+            "nullable": true
+          },
+          "backlinks_count": {
+            "type": "integer",
+            "nullable": true
+          },
+          "referring_domains": {
+            "type": "integer",
+            "nullable": true
+          },
+          "wayback_snapshots": {
+            "type": "integer",
+            "nullable": true
+          },
+          "pagerank": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Open PageRank (0-10); typically null because pending-delete rows are not SEO-enriched"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Full API documentation",
+    "url": "https://catchdoms.com/docs"
+  }
+}

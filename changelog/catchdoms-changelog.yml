@@ -1,0 +1,46 @@
+generated: '2026-09-27'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://catchdoms.com/changelog
+sources:
+- https://catchdoms.com/changelog
+entries:
+- breaking: false
+  highlights:
+  - Feature
+  - 'Ahrefs integration (BYOK): connect your Ahrefs API key to see Domain Rating, Backlinks, and Referring Domains directly in the table (Pro
+    only)'
+  date: '2026-03-04'
+- breaking: false
+  highlights:
+  - Feature
+  - 'Daily email alerts for saved searches: get notified when new domains match your saved filters (Pro only)'
+  date: '2026-03-01'
+- breaking: false
+  highlights:
+  - Feature
+  - 'Google My Business detection: see which domains have an active GMB listing with business name, category, and address'
+  date: '2026-02-28'
+- breaking: false
+  highlights:
+  - Feature
+  - 'Column visibility toggle: show/hide any column and save your preference'
+  date: '2026-02-26'
+- breaking: false
+  highlights:
+  - Improvement
+  - 'Redesigned filter sidebar: collapsible sections, multi-select TLD/language with search, dynamic filter count'
+  date: '2026-02-24'
+- breaking: false
+  highlights:
+  - Feature
+  - 'Aged Domains: discover deleted domains available for registration across 49 ccTLDs, with SEO metrics (TF, CF, DA, backlinks) and Google indexation
+    data'
+  date: '2026-02-18'
+- breaking: false
+  highlights:
+  - Improvement
+  - Wayback HTTP status codes and improved screenshot targeting
+  date: '2026-01-29'
+note: The changelog page lists dated entries but does not provide explicit version numbers or a versioning scheme.
+docs: https://catchdoms.com/changelog

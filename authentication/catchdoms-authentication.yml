@@ -1,0 +1,13 @@
+generated: '2026-09-27'
+method: derived
+source: openapi/catchdoms-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: API token from your CatchDoms account. Get one at https://catchdoms.com/api-access
+  sources:
+  - openapi/catchdoms-openapi.yml

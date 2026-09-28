@@ -1,23 +1,152 @@
 aid: catchdoms
 name: CatchDoms Expired Domains API
-description: 'CatchDoms Expired Domains API is a company surfaced via the API Evangelist harvest backlog
-  (source: new-submission) and added to the network as a stub for full-pipeline profiling.'
+image: https://catchdoms.com/images/og.jpg
+description: CatchDoms provides an API to discover expired and expiring domain names across multiple registrars such as Dynadot, GoDaddy, Catched,
+  and DropCatch. Users can filter results by domain age, backlink count, domain authority, and other SEO metrics. The service also assigns a quality
+  score to help identify hidden gem domains for resale or branding. Documentation includes endpoints for searching, retrieving domain details,
+  and accessing historical data, supporting JSON responses and pagination. The platform aims to empower marketers, investors, and developers to
+  capitalize on the secondary domain market efficiently.
 url: https://raw.githubusercontent.com/api-evangelist/catchdoms/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-27 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-09-27'
 modified: '2026-09-27'
 tags:
 - Company
-apis: []
+- API
+- Domains
+- SEO
+- Expired
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/catchdoms-agentic-access.yml
+- type: Plans
+  url: plans/catchdoms-plans-pricing.yml
+- type: Spectral
+  url: rules/catchdoms-rules.yml
+- type: JSONLD
+  url: json-ld/catchdoms-context.jsonld
+- type: Vocabulary
+  url: vocabulary/catchdoms-vocabulary.yml
+- type: DataModel
+  url: data-model/catchdoms-data-model.yml
+- type: ChangeLog
+  url: changelog/catchdoms-changelog.yml
+- type: ErrorCatalog
+  url: errors/catchdoms-problem-types.yml
+- type: Conformance
+  url: conformance/catchdoms-conformance.yml
+- type: Overlay
+  url: overlays/catchdoms-openapi-overlay.yml
+- type: LLMsTxt
+  url: llms/catchdoms-llms.txt
+- type: MCPServer
+  url: mcp/catchdoms-mcp.yml
+- type: WellKnown
+  url: well-known/catchdoms-well-known.yml
+- type: Hosts
+  url: hosts/catchdoms-hosts.yml
+- type: Vendors
+  url: vendors/catchdoms-vendors.yml
+- type: Support
+  url: https://catchdoms.com/tlds/help
+- type: SignUp
+  url: https://catchdoms.com/register
+- type: PrivacyPolicy
+  url: https://catchdoms.com/privacy
+- type: Newsroom
+  url: https://catchdoms.com/tlds/news
+- type: Leadership
+  url: https://catchdoms.com/tlds/team
+- type: Authentication
+  url: authentication/catchdoms-authentication.yml
+- type: DomainSecurity
+  url: security/catchdoms-domain-security.yml
 - type: Website
   url: https://catchdoms.com/
+- type: Documentation
+  url: https://catchdoms.com/docs
+- type: APIReference
+  url: https://catchdoms.com/api
+- type: Pricing
+  url: https://catchdoms.com/pricing
+- type: TermsOfService
+  url: https://catchdoms.com/terms
+- type: Blog
+  url: https://catchdoms.com/blog
+apis:
+- aid: catchdoms:catchdoms-domains-api
+  name: CatchDoms Expired Domains API Domains API
+  description: The Domains API from CatchDoms Expired Domains API — 2 operation(s) for domains.
+  humanURL: https://catchdoms.com/docs
+  baseURL: https://catchdoms.com/api
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/catchdoms-domains-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/catchdoms-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pending-delete-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-free-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-meta-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-links-schema.json
+- aid: catchdoms:catchdoms-free-api
+  name: CatchDoms Expired Domains API Free API
+  description: The Free API from CatchDoms Expired Domains API — 1 operation(s) for free.
+  humanURL: https://catchdoms.com/docs
+  baseURL: https://catchdoms.com/api
+  tags:
+  - Free
+  properties:
+  - type: OpenAPI
+    url: openapi/catchdoms-free-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/catchdoms-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pending-delete-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-free-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-meta-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-links-schema.json
+- aid: catchdoms:catchdoms-pending-delete-api
+  name: CatchDoms Expired Domains API Pending Delete API
+  description: >-
+    The Pending-Delete API from CatchDoms Expired Domains API — 2 operation(s) for pending-delete.
+  humanURL: https://catchdoms.com/docs
+  baseURL: https://catchdoms.com/api
+  tags:
+  - Pending-Delete
+  properties:
+  - type: OpenAPI
+    url: openapi/catchdoms-pending-delete-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/catchdoms-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pending-delete-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-free-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-meta-schema.json
+  - type: JSONSchema
+    url: json-schema/catchdoms-pagination-links-schema.json
+x-enrichment:
+  date: '2026-09-27'
+  status: enriched
+  artifacts_added: 22
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

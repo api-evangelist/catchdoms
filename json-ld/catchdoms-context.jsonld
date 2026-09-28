@@ -1,0 +1,316 @@
+{
+  "@context": {
+    "@vocab": "https://catchdoms.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "catchdoms": "https://catchdoms.com/schema#",
+    "Domain": "catchdoms:Domain",
+    "id": {
+      "@id": "catchdoms:id",
+      "@type": "xsd:integer"
+    },
+    "name": {
+      "@id": "catchdoms:name",
+      "@type": "xsd:string"
+    },
+    "tld": {
+      "@id": "catchdoms:tld",
+      "@type": "xsd:string"
+    },
+    "source": {
+      "@id": "catchdoms:source",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "catchdoms:type",
+      "@type": "xsd:string"
+    },
+    "auction_type": {
+      "@id": "catchdoms:auction_type",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "catchdoms:price",
+      "@type": "xsd:decimal"
+    },
+    "max_bid": {
+      "@id": "catchdoms:max_bid",
+      "@type": "xsd:decimal"
+    },
+    "effective_price": {
+      "@id": "catchdoms:effective_price",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "catchdoms:currency",
+      "@type": "xsd:string"
+    },
+    "bids_count": {
+      "@id": "catchdoms:bids_count",
+      "@type": "xsd:integer"
+    },
+    "auction_end_date": {
+      "@id": "catchdoms:auction_end_date",
+      "@type": "xsd:dateTime"
+    },
+    "estibot_appraisal": {
+      "@id": "catchdoms:estibot_appraisal",
+      "@type": "xsd:decimal"
+    },
+    "score": {
+      "@id": "catchdoms:score",
+      "@type": "xsd:integer"
+    },
+    "is_spammy": {
+      "@id": "catchdoms:is_spammy",
+      "@type": "xsd:boolean"
+    },
+    "age": {
+      "@id": "catchdoms:age",
+      "@type": "xsd:integer"
+    },
+    "wayback_snapshots": {
+      "@id": "catchdoms:wayback_snapshots",
+      "@type": "xsd:integer"
+    },
+    "wayback_first_date": {
+      "@id": "catchdoms:wayback_first_date",
+      "@type": "xsd:date"
+    },
+    "wayback_last_date": {
+      "@id": "catchdoms:wayback_last_date",
+      "@type": "xsd:date"
+    },
+    "pagerank": {
+      "@id": "catchdoms:pagerank",
+      "@type": "xsd:integer"
+    },
+    "domain_authority": {
+      "@id": "catchdoms:domain_authority",
+      "@type": "xsd:integer"
+    },
+    "backlinks_count": {
+      "@id": "catchdoms:backlinks_count",
+      "@type": "xsd:integer"
+    },
+    "referring_domains": {
+      "@id": "catchdoms:referring_domains",
+      "@type": "xsd:integer"
+    },
+    "trust_flow": {
+      "@id": "catchdoms:trust_flow",
+      "@type": "xsd:integer"
+    },
+    "citation_flow": {
+      "@id": "catchdoms:citation_flow",
+      "@type": "xsd:integer"
+    },
+    "ttf_topic": {
+      "@id": "catchdoms:ttf_topic",
+      "@type": "xsd:string"
+    },
+    "ref_domains_edu": {
+      "@id": "catchdoms:ref_domains_edu",
+      "@type": "xsd:integer"
+    },
+    "ref_domains_gov": {
+      "@id": "catchdoms:ref_domains_gov",
+      "@type": "xsd:integer"
+    },
+    "ref_domains_dofollow": {
+      "@id": "catchdoms:ref_domains_dofollow",
+      "@type": "xsd:integer"
+    },
+    "seo_domains_category": {
+      "@id": "catchdoms:seo_domains_category",
+      "@type": "xsd:string"
+    },
+    "seo_domains_subcategory": {
+      "@id": "catchdoms:seo_domains_subcategory",
+      "@type": "xsd:string"
+    },
+    "indexed_pages": {
+      "@id": "catchdoms:indexed_pages",
+      "@type": "xsd:integer"
+    },
+    "historical_tech": {
+      "@id": "catchdoms:historical_tech",
+      "@container": "@list"
+    },
+    "use_cases": {
+      "@id": "catchdoms:use_cases",
+      "@container": "@list"
+    },
+    "historical_traffic_etv": {
+      "@id": "catchdoms:historical_traffic_etv",
+      "@type": "xsd:integer"
+    },
+    "historical_traffic_peak": {
+      "@id": "catchdoms:historical_traffic_peak",
+      "@type": "xsd:integer"
+    },
+    "historical_traffic_spark": {
+      "@id": "catchdoms:historical_traffic_spark",
+      "@container": "@list"
+    },
+    "historical_traffic_fetched_at": {
+      "@id": "catchdoms:historical_traffic_fetched_at",
+      "@type": "xsd:dateTime"
+    },
+    "historical_traffic": {
+      "@id": "catchdoms:historical_traffic"
+    },
+    "monthly_visitors": {
+      "@id": "catchdoms:monthly_visitors",
+      "@type": "xsd:integer"
+    },
+    "language": {
+      "@id": "catchdoms:language",
+      "@type": "xsd:string"
+    },
+    "has_gmb": {
+      "@id": "catchdoms:has_gmb",
+      "@type": "xsd:boolean"
+    },
+    "gmb_name": {
+      "@id": "catchdoms:gmb_name",
+      "@type": "xsd:string"
+    },
+    "gmb_category": {
+      "@id": "catchdoms:gmb_category",
+      "@type": "xsd:string"
+    },
+    "gmb_address": {
+      "@id": "catchdoms:gmb_address",
+      "@type": "xsd:string"
+    },
+    "whois_registered_at": {
+      "@id": "catchdoms:whois_registered_at",
+      "@type": "xsd:dateTime"
+    },
+    "whois_expires_at": {
+      "@id": "catchdoms:whois_expires_at",
+      "@type": "xsd:dateTime"
+    },
+    "whois_last_changed_at": {
+      "@id": "catchdoms:whois_last_changed_at",
+      "@type": "xsd:dateTime"
+    },
+    "whois_registrar": {
+      "@id": "catchdoms:whois_registrar",
+      "@type": "xsd:string"
+    },
+    "whois_status": {
+      "@id": "catchdoms:whois_status",
+      "@container": "@list"
+    },
+    "whois_nameservers": {
+      "@id": "catchdoms:whois_nameservers",
+      "@container": "@list"
+    },
+    "whois_ns_category": {
+      "@id": "catchdoms:whois_ns_category",
+      "@type": "xsd:string"
+    },
+    "whois_checked_at": {
+      "@id": "catchdoms:whois_checked_at",
+      "@type": "xsd:dateTime"
+    },
+    "purchase_url": {
+      "@id": "catchdoms:purchase_url",
+      "@type": "xsd:string"
+    },
+    "purchase_platform": {
+      "@id": "catchdoms:purchase_platform",
+      "@type": "xsd:string"
+    },
+    "created_at": {
+      "@id": "catchdoms:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "catchdoms:updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "PaginationLinks": "catchdoms:PaginationLinks",
+    "first": {
+      "@id": "catchdoms:first",
+      "@type": "xsd:string"
+    },
+    "last": {
+      "@id": "catchdoms:last",
+      "@type": "xsd:string"
+    },
+    "prev": {
+      "@id": "catchdoms:prev",
+      "@type": "xsd:string"
+    },
+    "next": {
+      "@id": "catchdoms:next",
+      "@type": "xsd:string"
+    },
+    "PaginationMeta": "catchdoms:PaginationMeta",
+    "current_page": {
+      "@id": "catchdoms:current_page",
+      "@type": "xsd:integer"
+    },
+    "last_page": {
+      "@id": "catchdoms:last_page",
+      "@type": "xsd:integer"
+    },
+    "per_page": {
+      "@id": "catchdoms:per_page",
+      "@type": "xsd:integer"
+    },
+    "total": {
+      "@id": "catchdoms:total",
+      "@type": "xsd:integer"
+    },
+    "from": {
+      "@id": "catchdoms:from",
+      "@type": "xsd:integer"
+    },
+    "to": {
+      "@id": "catchdoms:to",
+      "@type": "xsd:integer"
+    },
+    "FreeDomain": "catchdoms:FreeDomain",
+    "PendingDeleteDomain": "catchdoms:PendingDeleteDomain",
+    "domain": {
+      "@id": "catchdoms:domain",
+      "@type": "xsd:string"
+    },
+    "week_end": {
+      "@id": "catchdoms:week_end",
+      "@type": "xsd:date"
+    },
+    "first_disappeared_at": {
+      "@id": "catchdoms:first_disappeared_at",
+      "@type": "xsd:dateTime"
+    },
+    "dns_status": {
+      "@id": "catchdoms:dns_status",
+      "@type": "xsd:string"
+    },
+    "estimated_drop_date": {
+      "@id": "catchdoms:estimated_drop_date",
+      "@type": "xsd:date"
+    },
+    "is_idn": {
+      "@id": "catchdoms:is_idn",
+      "@type": "xsd:boolean"
+    },
+    "sld_length": {
+      "@id": "catchdoms:sld_length",
+      "@type": "xsd:integer"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "CatchDoms Expired Domains API API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects CatchDoms Expired Domains API's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-27) from openapi/catchdoms-openapi.yml.",
+  "dcterms:created": "2026-09-27",
+  "dcterms:source": [
+    "openapi/catchdoms-openapi.yml"
+  ]
+}

@@ -1,0 +1,440 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/catchdoms/main/json-schema/catchdoms-domain-schema.json",
+  "title": "Domain",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/catchdoms-openapi.yml#/components/schemas/Domain",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique domain identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full domain name"
+    },
+    "tld": {
+      "type": "string",
+      "description": "TLD with dot prefix"
+    },
+    "source": {
+      "type": "string",
+      "description": "Source platform",
+      "enum": [
+        "dynadot",
+        "catched",
+        "dropcatch",
+        "godaddy",
+        "gname",
+        "snapnames",
+        "ukdroplists",
+        "subreg",
+        "webexpire",
+        "parkio",
+        "bloomup",
+        "nicsell",
+        "namesilo",
+        "namecheap",
+        "sedo",
+        "gnews-domains",
+        "backorders-domains",
+        "domainlore",
+        "rakkodomain",
+        "seodomains",
+        "nameshift",
+        "namepros",
+        "regfree"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "description": "Domain type",
+      "enum": [
+        "auction",
+        "closeout",
+        "backorder"
+      ]
+    },
+    "auction_type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Sub-type (DropCatch: Dropped/PreRelease/PrivateSeller, GoDaddy: Bid/BuyNow)"
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Fixed price or starting price in the source's native currency"
+    },
+    "max_bid": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Current highest bid in the source's native currency"
+    },
+    "effective_price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Actual price: max_bid if set, otherwise price"
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code for price, max_bid, effective_price, estibot_appraisal, and renewal_price values from this source; null when the source has no single deterministic currency"
+    },
+    "bids_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Number of bids"
+    },
+    "auction_end_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "Auction end date (ISO 8601)"
+    },
+    "estibot_appraisal": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Automated valuation estimate"
+    },
+    "score": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Quality score (0-100)"
+    },
+    "is_spammy": {
+      "type": "boolean",
+      "description": "Whether flagged as spammy"
+    },
+    "age": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Domain age in years"
+    },
+    "wayback_snapshots": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Wayback Machine snapshot count"
+    },
+    "wayback_first_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "First Wayback snapshot"
+    },
+    "wayback_last_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Last Wayback snapshot"
+    },
+    "pagerank": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Open PageRank (0-10)"
+    },
+    "domain_authority": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Domain Authority (0-100)"
+    },
+    "backlinks_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Total backlinks"
+    },
+    "referring_domains": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Unique referring domains"
+    },
+    "trust_flow": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Trust Flow (0-100)"
+    },
+    "citation_flow": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Citation Flow (0-100)"
+    },
+    "ttf_topic": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Topical Trust Flow category"
+    },
+    "ref_domains_edu": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "EDU referring domains"
+    },
+    "ref_domains_gov": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "GOV referring domains"
+    },
+    "ref_domains_dofollow": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Dofollow referring domains"
+    },
+    "seo_domains_category": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "SEO.Domains category (seodomains source only)"
+    },
+    "seo_domains_subcategory": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "SEO.Domains subcategory (seodomains source only)"
+    },
+    "indexed_pages": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Google indexed pages"
+    },
+    "historical_tech": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Tech stack fingerprints detected on the archived Wayback snapshot. null = not checked yet, [] = checked but no signal, array of labels = detected stack. Queryable via the techs filter (see /api/domains parameters)."
+    },
+    "use_cases": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Buyer-intent categories derived from historical tech: ecommerce, local-biz, news, saas, forum, media, or developer. null = not classified yet."
+    },
+    "historical_traffic_etv": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Latest estimated worldwide monthly organic traffic"
+    },
+    "historical_traffic_peak": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Peak estimated monthly organic traffic over the historical window"
+    },
+    "historical_traffic_spark": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "integer"
+      },
+      "description": "Denormalized historical monthly traffic series for charts"
+    },
+    "historical_traffic_fetched_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When historical traffic data was last fetched"
+    },
+    "historical_traffic": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Full historical organic-traffic data, including country breakdowns. Present only when include_historical_traffic=true."
+    },
+    "monthly_visitors": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Estimated monthly visitors"
+    },
+    "language": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Detected language code"
+    },
+    "has_gmb": {
+      "type": "boolean",
+      "description": "Has Google Business listing"
+    },
+    "gmb_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "GMB business name"
+    },
+    "gmb_category": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "GMB business category"
+    },
+    "gmb_address": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "GMB business address"
+    },
+    "whois_registered_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "WHOIS or RDAP registration date"
+    },
+    "whois_expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "WHOIS or RDAP expiration date"
+    },
+    "whois_last_changed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "WHOIS or RDAP last-change date"
+    },
+    "whois_registrar": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Registrar reported by WHOIS or RDAP"
+    },
+    "whois_status": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Domain status values reported by WHOIS or RDAP"
+    },
+    "whois_nameservers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Nameservers reported by WHOIS or RDAP"
+    },
+    "whois_ns_category": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Classification of the current nameserver configuration"
+    },
+    "whois_checked_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When WHOIS or RDAP data was last checked"
+    },
+    "purchase_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Direct buy/bid link"
+    },
+    "purchase_platform": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Source platform name"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Added to CatchDoms"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last updated"
+    }
+  }
+}

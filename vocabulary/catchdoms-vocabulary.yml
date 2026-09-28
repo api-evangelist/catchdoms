@@ -1,0 +1,39 @@
+generated: '2026-09-27'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/catchdoms-openapi.yml
+vocabulary:
+  name: CatchDoms Expired Domains API Domain Vocabulary
+  description: 'Terms declared by CatchDoms Expired Domains API''s own API contract: its resource groups, objects and enumerations, with the contract''s
+    definitions. Derived, not authored.'
+  version: '2026-09-27'
+  terms:
+  - term: Domain
+    definition: 'Object declared by the contract with fields: id, name, tld, source, type, auction_type, price, max_bid, effective_price, currency,
+      bids_count, auction_end_date. (45 more)'
+    tags:
+    - Object
+    source: openapi/catchdoms-openapi.yml#/components/schemas/Domain
+  - term: PaginationLinks
+    definition: 'Object declared by the contract with fields: first, last, prev, next.'
+    tags:
+    - Object
+    source: openapi/catchdoms-openapi.yml#/components/schemas/PaginationLinks
+  - term: PaginationMeta
+    definition: 'Object declared by the contract with fields: current_page, last_page, per_page, total, from, to.'
+    tags:
+    - Object
+    source: openapi/catchdoms-openapi.yml#/components/schemas/PaginationMeta
+  - term: FreeDomain
+    definition: A domain as returned by the free, unauthenticated /free/domains endpoint. Names beyond the first few are masked, and premium metrics
+      (TF/CF/TTF/GMB) are omitted.
+    tags:
+    - Object
+    source: openapi/catchdoms-openapi.yml#/components/schemas/FreeDomain
+  - term: PendingDeleteDomain
+    definition: 'A domain in actionable pending-delete state. Authority+ tier only. Note: the SEO-metric fields (score, domain_authority, trust_flow,
+      citation_flow, backlinks_count, referring_domains, pagerank, wayback_snapshots) are present for shape-consistency with the Domain schema
+      but are typically null for pending-delete rows, which are a WHOIS-classified drop-signal feed and are not SEO-enriched.'
+    tags:
+    - Object
+    source: openapi/catchdoms-openapi.yml#/components/schemas/PendingDeleteDomain

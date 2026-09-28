@@ -1,0 +1,8 @@
+generated: '2026-09-27'
+method: probed
+source: https://catchdoms.com/mcp
+deployment:
+  mode: remote
+  endpoint: https://catchdoms.com/mcp
+  auth: unknown
+  verified: probed

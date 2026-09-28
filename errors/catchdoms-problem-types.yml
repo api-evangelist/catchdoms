@@ -1,0 +1,46 @@
+generated: '2026-09-27'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/catchdoms-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: null
+coverage:
+  operations: 5
+  statuses_declared: 5
+problems:
+- status: 401
+  title: Unauthorized
+  description: Missing or invalid API token
+  operations: 3
+  media_types: []
+  schema: null
+- status: 403
+  title: Forbidden
+  description: 'Valid token but no Pro subscription — or, for after_id requests, cursor_not_available: the keyset
+    cursor is denied for free API channels, tr'
+  operations: 3
+  media_types: []
+  schema: null
+- status: 404
+  title: Not Found
+  description: Domain not found
+  operations: 2
+  media_types: []
+  schema: null
+- status: 429
+  title: Too Many Requests
+  description: Rate limit exceeded (3 requests/minute per IP)
+  operations: 1
+  media_types: []
+  schema: null
+- status: 503
+  title: Service Unavailable
+  description: 'The request could not be served within its server-side budget. Every SQL statement on this route
+    runs under an execution budget (count 6 s, '
+  operations: 1
+  media_types:
+  - application/json
+  schema: null

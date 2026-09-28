@@ -1,0 +1,237 @@
+openapi: 3.2.0
+info:
+  title: CatchDoms Free API
+  description: Search expired, auction, brandable, aged deleted, and pending-delete domains from 20+ sources with SEO metrics, quality scores, traffic estimates, and auction prices. Updated continuously across source-specific schedules.
+  version: 1.1.1
+  contact:
+    name: CatchDoms
+    url: https://catchdoms.com
+    email: hello@catchdoms.com
+  x-logo:
+    url: https://catchdoms.com/img/favicons/android-chrome-192x192.png
+servers:
+- url: https://catchdoms.com/api
+  description: Production
+security:
+- BearerAuth: []
+tags:
+- name: Free
+paths:
+  /free/domains:
+    get:
+      summary: Free domain search (no auth)
+      description: Public, unauthenticated demo endpoint. Rate-limited to 3 requests/minute per IP. Returns at most 50 results; only the first few domain names are shown in full, the rest are masked (e.g. ••••••••.com), and premium metrics (Trust Flow, Citation Flow, TTF topic, GMB) are omitted. Use the authenticated /domains endpoint for full data.
+      operationId: freeDomains
+      security: []
+      parameters:
+      - name: source
+        in: query
+        description: Filter by source platform (free-tier sources only)
+        schema:
+          type: string
+          enum:
+          - dynadot
+          - catched
+          - dropcatch
+          - godaddy
+          - gname
+          - snapnames
+          - ukdroplists
+          - subreg
+          - webexpire
+          - parkio
+          - bloomup
+          - seodomains
+      - name: tld
+        in: query
+        description: Filter by TLD
+        schema:
+          type: string
+      - name: score_min
+        in: query
+        description: Minimum quality score (0-100)
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 100
+      - name: age_min
+        in: query
+        description: Minimum age in years
+        schema:
+          type: integer
+          minimum: 0
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - auction
+          - closeout
+          - backorder
+      - name: has_bids
+        in: query
+        schema:
+          type: boolean
+      - name: has_backlinks
+        in: query
+        schema:
+          type: boolean
+      - name: da_min
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 100
+      - name: rd_min
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+      - name: language
+        in: query
+        schema:
+          type: string
+      - name: contains
+        in: query
+        schema:
+          type: string
+      - name: price_min
+        in: query
+        description: Minimum price or bid in each source's native currency
+        schema:
+          type: number
+      - name: price_max
+        in: query
+        description: Maximum price or bid in each source's native currency
+        schema:
+          type: number
+      - name: snapshots_min
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+      - name: limit
+        in: query
+        description: Number of results (1-50, default 10)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
+      responses:
+        '200':
+          description: Masked free-tier results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FreeDomain'
+                  meta:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      total_available:
+                        type: integer
+                      visible_names:
+                        type: integer
+                        description: How many domain names are shown in full before masking
+                      free_tier:
+                        type: boolean
+                  note:
+                    type: string
+                  upsell:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      signup_url:
+                        type: string
+                      pro_url:
+                        type: string
+        '429':
+          description: Rate limit exceeded (3 requests/minute per IP)
+      tags:
+      - Free
+components:
+  schemas:
+    FreeDomain:
+      type: object
+      description: A domain as returned by the free, unauthenticated /free/domains endpoint. Names beyond the first few are masked, and premium metrics (TF/CF/TTF/GMB) are omitted.
+      properties:
+        name:
+          type: string
+          description: Domain name, or a masked placeholder (••••••••.tld) beyond the free visible limit
+        tld:
+          type: string
+        source:
+          type: string
+        type:
+          type:
+          - string
+          - 'null'
+        price:
+          type:
+          - number
+          - 'null'
+        max_bid:
+          type:
+          - number
+          - 'null'
+        currency:
+          type:
+          - string
+          - 'null'
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code for this source's price fields; null when not deterministic
+          example: USD
+        bids_count:
+          type:
+          - integer
+          - 'null'
+        auction_end_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        score:
+          type:
+          - integer
+          - 'null'
+        age:
+          type:
+          - integer
+          - 'null'
+        domain_authority:
+          type:
+          - integer
+          - 'null'
+        backlinks_count:
+          type:
+          - integer
+          - 'null'
+        referring_domains:
+          type:
+          - integer
+          - 'null'
+        language:
+          type:
+          - string
+          - 'null'
+        purchase_url:
+          type:
+          - string
+          - 'null'
+          description: Buy/bid link; null when the domain name is masked
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from your CatchDoms account. Get one at https://catchdoms.com/api-access
+externalDocs:
+  description: Full API documentation
+  url: https://catchdoms.com/docs

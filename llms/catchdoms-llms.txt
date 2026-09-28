@@ -1,0 +1,76 @@
+# CatchDoms
+
+> Expired domain finder that aggregates 20+ registrars, drop-catchers, marketplaces, and domain databases, enriches domains with SEO metrics, and scores them 0-100. Includes a REST API and MCP server for AI assistants.
+
+CatchDoms pulls expiring, auction, brandable, pending-delete, and deleted domains from more than 20 sources. Each domain can include Trust Flow, Citation Flow, Domain Authority, backlinks, referring domains, Wayback Machine history, language detection, historical technology signals, organic-traffic estimates, and Google Business Profile data. A scoring algorithm (0-100) with spam detection surfaces the best domains quickly.
+
+The Aged Domains database contains deleted domains across roughly 80 ccTLDs that remain available for registration at standard registrar prices, with no auction required.
+
+The Pending Delete database tracks actionable ccTLD and gTLD domains before they drop, including pendingDelete, redemptionPeriod, serverHold, clientHold, transition, and quarantine states, with estimated drop dates where available.
+
+Authority unlocks the Aged Domains deleted-ccTLD inventory. Authority+ includes Authority access and additionally unlocks the Pending Delete inventory.
+
+Built for SEO professionals, domain investors, and digital agencies.
+
+## Domain Sources
+
+- [Dynadot Closeouts](https://catchdoms.com/dynadot): Fixed-price closeout domains from Dynadot
+- [Catched Auctions](https://catchdoms.com/catched): Auction domains from Catched.com
+- [DropCatch Auctions](https://catchdoms.com/dropcatch): Dropped, pre-release, and private-seller auctions
+- [GoDaddy Auctions](https://catchdoms.com/godaddy): Expiring auctions and closeout listings
+- [Gname Auctions](https://catchdoms.com/gname): Auction and buy-now domains from Gname
+- [SnapNames](https://catchdoms.com/snapnames): Pre-release and closeout auctions
+- [UK Domains](https://catchdoms.com/uk-domains): UK dropping and expired domains
+- [Subreg](https://catchdoms.com/subreg): European expiring auctions and closeouts
+- [WebExpire](https://catchdoms.com/webexpire): French .fr domain auctions
+- [Park.io](https://catchdoms.com/parkio): Premium domain auctions
+- [BloomUp](https://catchdoms.com/bloomup): French .fr auctions and buy-now listings
+- [Nicsell](https://catchdoms.com/nicsell): European ccTLD auctions, including .de, .fr, .nl, and .eu
+- [NameSilo](https://catchdoms.com/namesilo): Registrar expired-domain auctions
+- [Namecheap](https://catchdoms.com/namecheap): Quality-filtered marketplace auctions with pre-filled SEO metrics
+- [Sedo](https://catchdoms.com/sedo): Sedo expiring-domain auctions (7 days, from €69) with pre-filled Majestic metrics
+- [Gnews Domains](https://catchdoms.com/gnews-domains): Hand-curated premium news domains
+- [Backorders Domains](https://catchdoms.com/backorders-domains): Niche ccTLD auctions
+- [DomainLore](https://catchdoms.com/domainlore): UK auctions, including Spotlight, Hidden Gems, and SEO listings
+- [Rakko](https://catchdoms.com/rakkodomain): Japanese expired-domain marketplace with pre-filled SEO metrics
+- [SEO.Domains](https://catchdoms.com/seo-domains): Buy-now expired domains with pre-filled SEO metrics and language data
+- [NameShift](https://catchdoms.com/nameshift): Marketplace buy-now catalogue with pre-filled SEO metrics
+- [NamePros Brandable Domains](https://catchdoms.com/brandable-domains/namepros): Brandable buy-now and make-offer listings focused on naming rather than SEO history
+- [Aged Domains](https://catchdoms.com/aged-domains): Deleted domains across roughly 80 ccTLDs, checked for availability and registerable at standard price (Authority tier)
+- [Pending Delete Domains](https://catchdoms.com/pending-delete-domains): Actionable ccTLD and gTLD domains about to drop, with WHOIS classification and estimated drop dates (Authority+ tier)
+
+## Price Currencies
+
+REST and MCP domain responses include `currency`, the ISO 4217 code applying to the raw `price`, `max_bid`, `effective_price`, `estibot_appraisal`, and `renewal_price` values. Amounts are not converted; price filters compare each source's native amounts.
+
+- USD: Dynadot, Catched, DropCatch, GoDaddy, Gname, SnapNames, Park.io, NameSilo, Namecheap, SEO.Domains, NamePros
+- EUR: Subreg, WebExpire, BloomUp, Nicsell, Sedo, Gnews Domains, Backorders Domains
+- GBP: UKDroplists, DomainLore
+- JPY: Rakko
+- `null`: NameShift and Aged Domains (Regfree), because their import paths do not have one deterministic source currency; Pending Delete has no price fields
+
+## Features
+
+- [New Today](https://catchdoms.com/new): Domains added in the last 24 hours
+- [Curated Lists](https://catchdoms.com/curated): Hand-picked domain selections
+- [Brandable Domains](https://catchdoms.com/brandable-domains): Brandable buy-now and make-offer domains
+- [Aged Domains](https://catchdoms.com/aged-domains): Deleted ccTLD domains available for registration at standard price
+- [Pending Delete Domains](https://catchdoms.com/pending-delete-domains): ccTLD and gTLD inventory approaching deletion
+- [Scoring Methodology](https://catchdoms.com/how-we-score): How domains are scored 0-100
+- [Pricing](https://catchdoms.com/pricing): Free, Pro, Authority, and Authority+ plans
+
+## Developer Resources
+
+- [API Documentation](https://catchdoms.com/docs): REST API reference for searching and filtering domains
+- [API Overview](https://catchdoms.com/api): API features and access information
+- [OpenAPI Specification](https://catchdoms.com/openapi.json): Machine-readable OpenAPI 3.0 specification
+- [Free Domains API](https://catchdoms.com/api/free/domains): Unauthenticated, rate-limited API demo with masked results
+- [MCP Server](https://catchdoms.com/mcp): Model Context Protocol server for Claude and other AI assistants
+
+## Optional
+
+- [Blog](https://catchdoms.com/blog): Articles about expired domains and SEO
+- [Alternatives](https://catchdoms.com/alternatives): CatchDoms vs other expired-domain tools
+- [Changelog](https://catchdoms.com/changelog): Product updates and new features
+- [Privacy Policy](https://catchdoms.com/privacy): Privacy policy
+- [Terms of Service](https://catchdoms.com/terms): Terms of service

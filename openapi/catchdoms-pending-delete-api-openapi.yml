@@ -1,0 +1,337 @@
+openapi: 3.2.0
+info:
+  title: CatchDoms Pending Delete API
+  description: Search expired, auction, brandable, aged deleted, and pending-delete domains from 20+ sources with SEO metrics, quality scores, traffic estimates, and auction prices. Updated continuously across source-specific schedules.
+  version: 1.1.1
+  contact:
+    name: CatchDoms
+    url: https://catchdoms.com
+    email: hello@catchdoms.com
+  x-logo:
+    url: https://catchdoms.com/img/favicons/android-chrome-192x192.png
+servers:
+- url: https://catchdoms.com/api
+  description: Production
+security:
+- BearerAuth: []
+tags:
+- name: Pending-Delete
+paths:
+  /pending-delete:
+    get:
+      tags:
+      - Pending-Delete
+      operationId: listPendingDeleteDomains
+      summary: List pending-delete domains (Authority+)
+      description: Weekly inventory of domains about to drop across 125+ ccTLDs and gTLDs. Default view (week_end=all) returns upcoming drops only, soonest first; rows whose estimated drop date already passed are excluded unless include_past=1. Requires an Authority+ subscription (403 with upgrade_url otherwise).
+      parameters:
+      - name: tld
+        in: query
+        description: Comma-separated TLD list, with or without leading dot
+        schema:
+          type: string
+          example: fr,de,com
+      - name: status
+        in: query
+        description: Comma-separated WHOIS status filter
+        schema:
+          type: string
+          example: pendingDelete,redemptionPeriod
+      - name: source
+        in: query
+        description: Pipeline source
+        schema:
+          type: string
+          enum:
+          - oi-diff
+          - czds-daily
+      - name: week_end
+        in: query
+        description: Snapshot week (YYYY-MM-DD) or 'all' (combined view). Explicit weeks include historical rows regardless of drop date.
+        schema:
+          type: string
+          default: all
+      - name: drops_within
+        in: query
+        description: Only rows whose estimated drop date is within N days from today (never past dates)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 60
+      - name: contains
+        in: query
+        description: Substring match on the domain name
+        schema:
+          type: string
+      - name: no_dashes
+        in: query
+        description: Exclude SLDs containing hyphens
+        schema:
+          type: boolean
+      - name: no_numbers
+        in: query
+        description: Exclude SLDs containing digits
+        schema:
+          type: boolean
+      - name: include_past
+        in: query
+        description: With week_end=all, also return rows whose estimated drop date already passed
+        schema:
+          type: boolean
+          default: false
+      - name: sort
+        in: query
+        description: Ordering. drop_date = soonest first, rows without a computable date last. drop_date_desc lists rows without a date first; combine with drops_within to keep dated rows only.
+        schema:
+          type: string
+          enum:
+          - drop_date
+          - drop_date_desc
+          - domain
+          default: drop_date
+      - name: per_page
+        in: query
+        description: Results per page (this endpoint uses per_page, not limit)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 200
+          default: 50
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      responses:
+        '200':
+          description: Paginated list of pending-delete domains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PendingDeleteDomain'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: Missing or invalid API token
+        '403':
+          description: Valid token but no Authority+ subscription (response includes upgrade_url)
+        '503':
+          description: The request could not be served within its server-side budget. Every SQL statement on this route runs under an execution budget (count 6 s, ordered walk 4 s, row fetch 2 s) and a cold total for a given filter shape is computed by one request at a time; concurrent or over-budget requests get this JSON response with a Retry-After header instead of a proxy 504. Retry after the indicated delay, or narrow the query (tld, status, drops_within).
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    enum:
+                    - count_busy
+                    - count_timeout
+                    - rows_timeout
+                  message:
+                    type: string
+                required:
+                - error
+                - message
+  /pending-delete/{domain}:
+    get:
+      tags:
+      - Pending-Delete
+      operationId: getPendingDeleteDomain
+      summary: Look up one pending-delete domain (Authority+)
+      description: Case-insensitive lookup by domain name. Returns the most recent snapshot row, or 404 if the domain is not currently in actionable pending-delete state.
+      parameters:
+      - name: domain
+        in: path
+        required: true
+        description: Full domain name
+        schema:
+          type: string
+          example: example.fr
+      responses:
+        '200':
+          description: The pending-delete row
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PendingDeleteDomain'
+        '401':
+          description: Missing or invalid API token
+        '403':
+          description: Valid token but no Authority+ subscription
+        '404':
+          description: Domain not in actionable pending-delete state
+components:
+  schemas:
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        from:
+          type:
+          - integer
+          - 'null'
+        to:
+          type:
+          - integer
+          - 'null'
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type:
+          - string
+          - 'null'
+        last:
+          type:
+          - string
+          - 'null'
+        prev:
+          type:
+          - string
+          - 'null'
+        next:
+          type:
+          - string
+          - 'null'
+    PendingDeleteDomain:
+      type: object
+      description: 'A domain in actionable pending-delete state. Authority+ tier only. Note: the SEO-metric fields (score, domain_authority, trust_flow, citation_flow, backlinks_count, referring_domains, pagerank, wayback_snapshots) are present for shape-consistency with the Domain schema but are typically null for pending-delete rows, which are a WHOIS-classified drop-signal feed and are not SEO-enriched.'
+      properties:
+        id:
+          type: integer
+          description: Unique row identifier
+        domain:
+          type: string
+          example: example.fr
+        tld:
+          type: string
+          description: TLD without dot prefix
+          example: fr
+        source:
+          type: string
+          enum:
+          - oi-diff
+          - czds-daily
+          description: oi-diff = ccTLDs (weekly snapshot), czds-daily = gTLDs (daily zone files)
+        week_end:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Snapshot week anchor (Monday)
+        first_disappeared_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        whois_status:
+          type: string
+          enum:
+          - pendingDelete
+          - redemptionPeriod
+          - serverHold
+          - clientHold
+          - transition
+          - quarantine
+          description: WHOIS classification bucket
+        dns_status:
+          type:
+          - string
+          - 'null'
+        estimated_drop_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Predicted drop date; null when the registry timeline is not computable
+        whois_checked_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        is_idn:
+          type: boolean
+        sld_length:
+          type:
+          - integer
+          - 'null'
+        score:
+          type:
+          - integer
+          - 'null'
+        domain_authority:
+          type:
+          - integer
+          - 'null'
+        trust_flow:
+          type:
+          - integer
+          - 'null'
+        citation_flow:
+          type:
+          - integer
+          - 'null'
+        backlinks_count:
+          type:
+          - integer
+          - 'null'
+        referring_domains:
+          type:
+          - integer
+          - 'null'
+        wayback_snapshots:
+          type:
+          - integer
+          - 'null'
+        pagerank:
+          type:
+          - integer
+          - 'null'
+          description: Open PageRank (0-10); typically null because pending-delete rows are not SEO-enriched
+        language:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from your CatchDoms account. Get one at https://catchdoms.com/api-access
+externalDocs:
+  description: Full API documentation
+  url: https://catchdoms.com/docs

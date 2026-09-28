@@ -1,0 +1,26 @@
+generated: '2026-09-27'
+method: derived
+generator: derive-data-model.py
+source:
+- openapi/catchdoms-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 5
+  entities_in_spec: 5
+  relationships: 0
+entities:
+- name: Domain
+  fields: 57
+- name: FreeDomain
+  fields: 16
+  description: A domain as returned by the free, unauthenticated /free/domains endpoint. Names beyond the first
+    few are masked, and premium metrics (TF/CF/TTF/GMB) are omitted.
+- name: PaginationLinks
+  fields: 4
+- name: PaginationMeta
+  fields: 6
+- name: PendingDeleteDomain
+  fields: 23
+  description: 'A domain in actionable pending-delete state. Authority+ tier only. Note: the SEO-metric fields (score,
+    domain_authority, trust_flow, citation_flow, backlinks_count, referring_domains, pagerank, waybac'
+relationships: []

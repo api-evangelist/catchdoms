@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/catchdoms/main/json-schema/catchdoms-pagination-links-schema.json",
+  "title": "PaginationLinks",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/catchdoms-openapi.yml#/components/schemas/PaginationLinks",
+  "type": "object",
+  "properties": {
+    "first": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prev": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "next": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

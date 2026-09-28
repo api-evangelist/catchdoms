@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/catchdoms/main/json-schema/catchdoms-pagination-meta-schema.json",
+  "title": "PaginationMeta",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/catchdoms-openapi.yml#/components/schemas/PaginationMeta",
+  "type": "object",
+  "properties": {
+    "current_page": {
+      "type": "integer"
+    },
+    "last_page": {
+      "type": "integer"
+    },
+    "per_page": {
+      "type": "integer"
+    },
+    "total": {
+      "type": "integer"
+    },
+    "from": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "to": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  }
+}

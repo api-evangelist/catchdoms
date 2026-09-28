@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/catchdoms/main/json-schema/catchdoms-pending-delete-domain-schema.json",
+  "title": "PendingDeleteDomain",
+  "description": "A domain in actionable pending-delete state. Authority+ tier only. Note: the SEO-metric fields (score, domain_authority, trust_flow, citation_flow, backlinks_count, referring_domains, pagerank, wayback_snapshots) are present for shape-consistency with the Domain schema but are typically null for pending-delete rows, which are a WHOIS-classified drop-signal feed and are not SEO-enriched.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/catchdoms-openapi.yml#/components/schemas/PendingDeleteDomain",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique row identifier"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "tld": {
+      "type": "string",
+      "description": "TLD without dot prefix"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "oi-diff",
+        "czds-daily"
+      ],
+      "description": "oi-diff = ccTLDs (weekly snapshot), czds-daily = gTLDs (daily zone files)"
+    },
+    "week_end": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Snapshot week anchor (Monday)"
+    },
+    "first_disappeared_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "whois_status": {
+      "type": "string",
+      "enum": [
+        "pendingDelete",
+        "redemptionPeriod",
+        "serverHold",
+        "clientHold",
+        "transition",
+        "quarantine"
+      ],
+      "description": "WHOIS classification bucket"
+    },
+    "dns_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "estimated_drop_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "Predicted drop date; null when the registry timeline is not computable"
+    },
+    "whois_checked_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "is_idn": {
+      "type": "boolean"
+    },
+    "sld_length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "score": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "domain_authority": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "trust_flow": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "citation_flow": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "backlinks_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "referring_domains": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "wayback_snapshots": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "pagerank": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Open PageRank (0-10); typically null because pending-delete rows are not SEO-enriched"
+    },
+    "language": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  }
+}
