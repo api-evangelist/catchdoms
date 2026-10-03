@@ -1,25 +1,28 @@
 {
   "provider": "catchdoms",
   "sources": [
-    "catchdoms-openapi.yml"
+    "_original/catchdoms-openapi.yml"
   ],
   "outputs": [
     "catchdoms-domains-api-openapi.yml",
     "catchdoms-free-api-openapi.yml",
     "catchdoms-pending-delete-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/catchdoms-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "catchdoms-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "catchdoms-openapi.yml: tagged paths GET /free/domains -> Free",
     "catchdoms-openapi.yml: declared missing tag: Domains",
     "catchdoms-openapi.yml: declared missing tag: Free",
     "catchdoms-openapi.yml: declared missing tag: Pending-Delete",
-    "apis.yml register: written (+3 apis, 3 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "catchdoms-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "catchdoms-free-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "catchdoms-pending-delete-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

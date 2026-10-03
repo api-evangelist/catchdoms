@@ -305,25 +305,6 @@ paths:
           description: Domain not found
 components:
   schemas:
-    PaginationMeta:
-      type: object
-      properties:
-        current_page:
-          type: integer
-        last_page:
-          type: integer
-        per_page:
-          type: integer
-        total:
-          type: integer
-        from:
-          type:
-          - integer
-          - 'null'
-        to:
-          type:
-          - integer
-          - 'null'
     Domain:
       type: object
       properties:
@@ -670,6 +651,25 @@ components:
         next:
           type:
           - string
+          - 'null'
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        last_page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        from:
+          type:
+          - integer
+          - 'null'
+        to:
+          type:
+          - integer
           - 'null'
   securitySchemes:
     BearerAuth:
