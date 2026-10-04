@@ -633,25 +633,6 @@ components:
           type: string
           format: date-time
           description: Last updated
-    PaginationLinks:
-      type: object
-      properties:
-        first:
-          type:
-          - string
-          - 'null'
-        last:
-          type:
-          - string
-          - 'null'
-        prev:
-          type:
-          - string
-          - 'null'
-        next:
-          type:
-          - string
-          - 'null'
     PaginationMeta:
       type: object
       properties:
@@ -670,6 +651,25 @@ components:
         to:
           type:
           - integer
+          - 'null'
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type:
+          - string
+          - 'null'
+        last:
+          type:
+          - string
+          - 'null'
+        prev:
+          type:
+          - string
+          - 'null'
+        next:
+          type:
+          - string
           - 'null'
   securitySchemes:
     BearerAuth:
