@@ -1,0 +1,12 @@
+{
+ "url": "https://catchdoms.com/openapi.json",
+ "requested_url": "https://catchdoms.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 47101,
+ "sha256": "3df3437e36112f637ea3df4e80a5461c7e12dc11840c495a72b54d28ffa0c3fd",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
