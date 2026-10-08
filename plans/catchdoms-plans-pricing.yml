@@ -35,3 +35,41 @@ plans:
   billing_period: year
 docs: https://catchdoms.com/pricing
 note: 3 extracted row(s) were dropped because their quote was not on the page.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro Monthly
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro Annual
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Authority Monthly
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Authority Annual
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
