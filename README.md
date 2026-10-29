@@ -64,5 +64,142 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CatchDoms Expired Domains API is a company surfaced via the API Evangelist harvest backlog (source: new-submission) and added to the network as a stub for full-pipeline profiling.
-- https://catchdoms.com/
+CatchDoms provides an API to discover expired and expiring domain names across multiple registrars such as Dynadot, GoDaddy, Catched, and DropCatch. Users can filter results by domain age, backlink count, domain authority, and other SEO metrics. The service also assigns a quality score to help identify hidden gem domains for resale or branding. Documentation includes endpoints for searching, retrieving domain details, and accessing historical data, supporting JSON responses and pagination. The platform aims to empower marketers, investors, and developers to capitalize on the secondary domain market efficiently.
+
+**Areas:** Company · Domains · SEO · Expired
+
+## CatchDoms Expired Domains API on APIs.io
+
+Everything profiled for CatchDoms Expired Domains API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/catchdoms/](https://apis.io/providers/catchdoms/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [CatchDoms Expired Domains API Domains API](https://apis.io/apis/catchdoms/catchdoms-domains-api/) — The Domains API from CatchDoms Expired Domains API — 2 operation(s) for domains.
+- [CatchDoms Expired Domains API Free API](https://apis.io/apis/catchdoms/catchdoms-free-api/) — The Free API from CatchDoms Expired Domains API — 1 operation(s) for free.
+- [CatchDoms Expired Domains API Pending Delete API](https://apis.io/apis/catchdoms/catchdoms-pending-delete-api/) — The Pending-Delete API from CatchDoms Expired Domains API — 2 operation(s) for pending-delete.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [catchdoms-mcp.yml](https://apis.io/servers/catchdoms/catchdoms-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Catchdoms Agentic Access](https://apis.io/agentic-access/catchdoms/catchdoms-agentic-access/)
+
+#### JSON Schema (5)
+
+The data models the API reads and writes.
+
+- [Domain](https://apis.io/schemas/catchdoms/catchdoms-domain/)
+- [FreeDomain](https://apis.io/schemas/catchdoms/catchdoms-free-domain/)
+- [PaginationLinks](https://apis.io/schemas/catchdoms/catchdoms-pagination-links/)
+- [PaginationMeta](https://apis.io/schemas/catchdoms/catchdoms-pagination-meta/)
+- [PendingDeleteDomain](https://apis.io/schemas/catchdoms/catchdoms-pending-delete-domain/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Catchdoms Context](https://apis.io/jsonld/catchdoms/catchdoms-context/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Catchdoms Openapi Overlay](https://apis.io/overlays/catchdoms/catchdoms-openapi-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [CatchDoms Expired Domains API API Rules](https://apis.io/rules/catchdoms/catchdoms-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Catchdoms Authentication](https://apis.io/security/catchdoms/catchdoms-authentication/)
+- [Catchdoms Domain Security](https://apis.io/security/catchdoms/catchdoms-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Catchdoms Plans Pricing](https://apis.io/plans/catchdoms/catchdoms-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://catchdoms.com/)
+- [Documentation](https://catchdoms.com/docs)
+- [API reference](https://catchdoms.com/api)
+- [Pricing](https://catchdoms.com/pricing)
+- [Sign up](https://catchdoms.com/register)
+- [Support](https://catchdoms.com/tlds/help)
+- [Blog](https://catchdoms.com/blog)
+- [Terms of service](https://catchdoms.com/terms)
+- [Privacy policy](https://catchdoms.com/privacy)
+
+## API Evangelist rating
+
+**Kin Score 51.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 70.0 |
+| Contract quality | 64.2 |
+| Contract governance | 22.0 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 76.3 |
+
+**Agent readiness 40.9** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/catchdoms/](https://apis.io/providers/catchdoms/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CatchDoms Expired Domains API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/catchdoms/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
